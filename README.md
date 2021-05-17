@@ -1,7 +1,5 @@
 # Cmus Music Monitor Rust
 
-# This program is not fully finished yet. (ETA: Few days), for now use [this](https://github.com/benarmstead/cmus-music-monitor)
-
 Rust program for Cmus to monitor music listening habits.
 
 This is a rust implementation of my shell version of this program found [here](https://github.com/benarmstead/cmus-music-monitor)
@@ -14,30 +12,15 @@ I have written a small python program utilizing matplotlib to analyse and effect
 
 It can be found [here](https://github.com/benarmstead/music-grapher)
 
-# Compiling from source
+## Compiling from source
 
-Requirements:
+### Requirements:
 
-- `rustc` compiler
+- `cargo`
 
-## Compiling command
+### Build
 
-`rustc cmus_music_monitor.rs`
-
-## Running after compilation
-`./cmus_music_monitor`
-
-# Installation
-
-Use this is you are running an X86 CPU architecture. If not, you can compile it from source [here](# Compiling).
-
-`git clone https://github.com/benarmstead/cmus-music-monitor-rs/`
-
-`cd cmus-music-monitor-rs`
-
-`chmod +x cmus_music_monitor`
-
-`./cmus_music_monitor`
+`cargo build`
 
 This program is intended and designed to be run in the background on boot.
 
