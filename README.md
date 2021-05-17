@@ -1,5 +1,7 @@
 # Cmus Music Monitor Rust
 
+# This program is not fully finished yet. (ETA: Few days), for now use [this](https://github.com/benarmstead/cmus-music-monitor)
+
 Rust program for Cmus to monitor music listening habits.
 
 This is a rust implementation of my shell version of this program found [here](https://github.com/benarmstead/cmus-music-monitor)
