@@ -1,8 +1,10 @@
+extern crate chrono;
+
 use std::{thread, time, process};
 use std::io::{Read, Write};
 use std::process::Command;
+use chrono::prelude::*;
 use std::fs::OpenOptions;
-
 
 fn lock_access() {
    let mut file = std::fs::File::create("/tmp/cmus_music_monitor.lock").expect("create failed");
@@ -10,13 +12,13 @@ fn lock_access() {
 }
 
 fn is_locked() -> bool {
-    if std::path::Path::new("/tmp/cmus_music_monitor.lock").exists() == true{
+    if std::path::Path::new("/tmp/cmus_music_monitor.lock").exists() == true {
         let mut file = std::fs::File::open("/tmp/cmus_music_monitor.lock").unwrap();
         let mut contents = String::new();
         file.read_to_string(&mut contents).unwrap();
-        if contents == "RUNNING"{
+        if contents == "RUNNING" {
             return true;
-        }else{
+        }else {
             return false;
         }
     }
@@ -27,8 +29,9 @@ fn sleep(timer: u64) {
     thread::sleep(time::Duration::from_secs(timer));
 }
 
-fn write_info(current_song: [String;7]) {
-     // In future this will be taken as a cli argument
+fn write_info(current_song: [String; 9]) {
+    // In future this will be taken as a cli argument
+    println!("{}", current_song.join(","));
     let mut file = OpenOptions::new()
         .write(true)
         .append(true)
@@ -40,7 +43,7 @@ fn write_info(current_song: [String;7]) {
     }
 }
 
-fn parse_info(info: String, mut tags: [String; 7]) -> [String; 7] {
+fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
     for i in 0..7{
         let split_by_tag: Vec<&str> = info.split(&tags[i]).collect();
 
@@ -55,20 +58,27 @@ fn parse_info(info: String, mut tags: [String; 7]) -> [String; 7] {
         // This is due to the tags array being the correct size.
         // This saves declaring 1 more 7 x string array, so is more effecient.
     }
+
+
+    // Get date
+    // Get time
+    // Get volume
+    tags[7] = Local::now().naive_local().date().to_string();
+    tags[8] = Local::now().naive_local().time().format("%H:%M").to_string();
+
     return tags;
 }
 
 
 fn get_info(mut last_title: String){
-    let tags: [String; 7] = [
-        "tag title".to_string(),
-        "tag artist".to_string(),
-        "tag album".to_string(),
-        "tag genre".to_string(),
-        "duration".to_string(),
-        "tag tracknumber".to_string(),
-        "tag date".to_string()
-    ];
+    let mut tags: [String; 9] = Default::default();
+    tags[0] = "tag title".to_string();
+    tags[1] = "tag artist".to_string();
+    tags[2] = "tag album".to_string();
+    tags[3] = "tag genre".to_string();
+    tags[4] = "duration".to_string();
+    tags[5] = "tag tracknumber".to_string();
+    tags[6] = "tag date".to_string();
 
     let output = Command::new("cmus-remote")
                          .arg("-Q")
@@ -90,7 +100,7 @@ fn get_info(mut last_title: String){
         sleep(60);
     } else if info_array[1] == "playing" {
         println!("Cmus is playing");
-        let current_song: [String; 7] = parse_info(info, tags);
+        let current_song: [String; 9] = parse_info(info, tags);
         let current: String = current_song[0].clone();
         if last_title == current {
         }else{
