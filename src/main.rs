@@ -30,12 +30,12 @@ fn sleep(timer: u64) {
 }
 
 fn write_info(current_song: [String; 9]) {
-    // In future this will be taken as a cli argument
+    // In future the csv will be taken as a cli argument
     println!("{}", current_song.join(","));
     let mut file = OpenOptions::new()
         .write(true)
         .append(true)
-        .open("/home/ben/Scripts/musicMonitor/music-b.csv")
+        .open("/home/ben/Scripts/musicMonitor/music.csv")
         .unwrap();
 
     if let Err(error) = writeln!(file, "{}", current_song.join(",")) {
@@ -60,12 +60,12 @@ fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
     }
 
 
-    // Get date
-    // Get time
-    // Get volume
+    
+    
+    
     tags[7] = Local::now().naive_local().date().to_string();
     tags[8] = Local::now().naive_local().time().format("%H:%M").to_string();
-
+    // Get volume needs adding here
     return tags;
 }
 
@@ -113,7 +113,6 @@ fn get_info(mut last_title: String){
 }
 
 fn main() {
-    let _direc = "~/Scripts/musicMonitor/music.csv";
     if is_locked() == true{
         println!("All ready running!");
         process::exit(1);
