@@ -18,8 +18,6 @@ fn is_locked() -> bool {
         file.read_to_string(&mut contents).unwrap();
         if contents == "RUNNING" {
             return true;
-        }else {
-            return false;
         }
     }
     return false;
