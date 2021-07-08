@@ -1,6 +1,9 @@
+// Todo
+// - Monitor current second in song, if goes back, then re record song as been replayed
+
 extern crate chrono;
 
-use std::{thread, time, process};
+use std::{thread, time, process, env};
 use std::io::{Read, Write};
 use std::process::Command;
 use chrono::prelude::*;
@@ -27,13 +30,14 @@ fn sleep(timer: u64) {
     thread::sleep(time::Duration::from_secs(timer));
 }
 
-fn write_info(current_song: [String; 9]) {
+
+fn write_info(current_song: [String; 9], file_location: &String) {
     // In future the csv will be taken as a cli argument
     println!("{}", current_song.join(","));
     let mut file = OpenOptions::new()
         .write(true)
         .append(true)
-        .open("/home/ben/Scripts/musicMonitor/music.csv")
+        .open(file_location)
         .unwrap();
 
     if let Err(error) = writeln!(file, "{}", current_song.join(",")) {
@@ -55,11 +59,7 @@ fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
         // I decided to replace the tags string array with the songs values.
         // This is due to the tags array being the correct size.
         // This saves declaring 1 more 7 x string array, so is more effecient.
-    }
-
-
-    
-    
+    }    
     
     tags[7] = Local::now().naive_local().date().to_string();
     tags[8] = Local::now().naive_local().time().format("%H:%M").to_string();
@@ -68,7 +68,7 @@ fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
 }
 
 
-fn get_info(mut last_title: String){
+fn get_info(mut last_title: String, file_location: String){
     let mut tags: [String; 9] = Default::default();
     tags[0] = "tag title".to_string();
     tags[1] = "tag artist".to_string();
@@ -103,18 +103,26 @@ fn get_info(mut last_title: String){
         if last_title == current {
         }else{
             last_title = current;
-            write_info(current_song);
+            write_info(current_song, &file_location);
         }
         sleep(60);
     }
-    get_info(last_title);
+    get_info(last_title, file_location);
 }
 
 fn main() {
-    if is_locked() == true{
-        println!("All ready running!");
+    let args: Vec<String> = env::args().collect();
+    if args.len() != 2{
+        println!("You must pass one argument, and one argument only.");
         process::exit(1);
     }
+    let file_location = args[1].to_string();
+    println!("{}", file_location);
+    
+    if is_locked() == true{
+        println!("All ready running!");
+       process::exit(1); 
+    }
     lock_access();
-    get_info("sdvkjsiascc982ca2c".to_string());
+    get_info("sdvkjsiascc982ca2c".to_string(), file_location);
 }
