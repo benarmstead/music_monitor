@@ -6,6 +6,14 @@ This is a rust implementation of my shell version of this program found [here](h
 
 Gets all the metadata of the song being listened to, and writes it to a CSV.
 
+## Running
+
+`./cmus-music-monitor-rs <directory to CSV you want to use>`
+
+e.g. `./cmus-music-monitor-rs /home/ben/new.csv`
+
+**Warning**: the `.csv` should already exist. cmus-music-monitor-rs will not create it.
+
 ## Program to analyze data
 
 I have written a small python program utilizing matplotlib to analyze and effectively display the data stored in the .csv.
