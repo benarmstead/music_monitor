@@ -1,6 +1,6 @@
 [package]
 name = "cmus_music_monitor"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Ben Armstead <benarmstead@protonmail.com>"]
 edition = "2018"
 
