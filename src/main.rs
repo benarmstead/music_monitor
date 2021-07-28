@@ -122,5 +122,7 @@ fn main() {
     }
 
     lock_access();
-    get_info("sdvkjsiascc982ca2c".to_string(), file_location);
+
+    let random_string = "AEuJXHeUr7sKhwuWntS5wnitC5cTdtx3piRPp2Q5aDxrzqh5vZj4PyhQShJVWaTW".to_string();
+    get_info(random_string, file_location);
 }
