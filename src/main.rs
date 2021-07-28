@@ -30,7 +30,6 @@ fn sleep(timer: u64) {
 
 
 fn write_info(current_song: [String; 9], file_location: &String) {
-    // In future the csv will be taken as a cli argument
     println!("{}", current_song.join(","));
     let mut file = OpenOptions::new()
         .write(true)
@@ -60,8 +59,7 @@ fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
     }    
     
     tags[7] = Local::now().naive_local().date().to_string();
-    tags[8] = Local::now().naive_local().time().format("%H:%M").to_string();
-    // Get volume needs adding here
+    tags[8] = Local::now().naive_local().time().format("%H:%M").to_string(); 
     return tags;
 }
 
@@ -98,6 +96,7 @@ fn get_info(mut last_title: String, file_location: String){
         println!("Cmus is playing");
         let current_song: [String; 9] = parse_info(info, tags);
         let current: String = current_song[0].clone();
+        
         if last_title == current {
         }else{
             last_title = current;
@@ -121,6 +120,7 @@ fn main() {
         println!("All ready running!");
        process::exit(1); 
     }
+
     lock_access();
     get_info("sdvkjsiascc982ca2c".to_string(), file_location);
 }
