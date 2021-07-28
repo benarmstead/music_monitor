@@ -1,12 +1,10 @@
 // Todo
 // - Monitor current second in song, if goes back, then re record song as been replayed
 
-extern crate chrono;
-
 use std::{thread, time, process, env};
 use std::io::{Read, Write};
 use std::process::Command;
-use chrono::prelude::*;
+use chrono::prelude::Local;
 use std::fs::OpenOptions;
 
 fn lock_access() {
