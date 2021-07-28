@@ -50,7 +50,7 @@ fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
             tags[i] = "".to_string();
         }else{
 
-            let tag_value:    Vec<&str> = split_by_tag[1].lines().collect();
+            let tag_value: Vec<&str> = split_by_tag[1].lines().collect();
             tags[i] = tag_value[0].trim().to_string();
         }
         // I decided to replace the tags string array with the songs values.
