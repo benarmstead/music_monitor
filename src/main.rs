@@ -13,7 +13,7 @@ fn lock_access() {
 }
 
 fn is_locked() -> bool {
-    if std::path::Path::new("/tmp/cmus_music_monitor.lock").exists() == true {
+    if std::path::Path::new("/tmp/cmus_music_monitor.lock").exists() {
         let mut file = std::fs::File::open("/tmp/cmus_music_monitor.lock").unwrap();
         let mut contents = String::new();
         file.read_to_string(&mut contents).unwrap();
@@ -21,7 +21,7 @@ fn is_locked() -> bool {
             return true;
         }
     }
-    return false;
+    false
 }
 
 fn sleep(timer: u64) {
@@ -56,11 +56,11 @@ fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
         // I decided to replace the tags string array with the songs values.
         // This is due to the tags array being the correct size.
         // This saves declaring 1 more 7 x string array, so is more effecient.
-    }    
-    
+    }
+
     tags[7] = Local::now().naive_local().date().to_string();
-    tags[8] = Local::now().naive_local().time().format("%H:%M").to_string(); 
-    return tags;
+    tags[8] = Local::now().naive_local().time().format("%H:%M").to_string();
+    tags
 }
 
 
@@ -96,7 +96,7 @@ fn get_info(mut last_title: String, file_location: String){
         println!("Cmus is playing");
         let current_song: [String; 9] = parse_info(info, tags);
         let current: String = current_song[0].clone();
-        
+
         if last_title == current {
         }else{
             last_title = current;
@@ -115,10 +115,10 @@ fn main() {
     }
     let file_location = args[1].to_string();
     println!("{}", file_location);
-    
-    if is_locked() == true{
+
+    if is_locked(){
         println!("All ready running!");
-       process::exit(1); 
+       process::exit(1);
     }
 
     lock_access();
