@@ -29,7 +29,7 @@ fn sleep(timer: u64) {
 }
 
 
-fn write_info(current_song: [String; 9], file_location: &String) {
+fn write_info(current_song: [String; 9], file_location: &str) {
     println!("{}", current_song.join(","));
     let mut file = OpenOptions::new()
         .write(true)
@@ -49,7 +49,6 @@ fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
         if split_by_tag.len() == 1 {
             tags[i] = "".to_string();
         }else{
-
             let tag_value: Vec<&str> = split_by_tag[1].lines().collect();
             tags[i] = tag_value[0].trim().to_string();
         }
