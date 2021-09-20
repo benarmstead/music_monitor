@@ -42,6 +42,7 @@ fn write_info(current_song: [String; 9], file_location: &str) {
 }
 
 fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
+    #[allow(clippy::needless_range_loop)]
     for i in 0..7 {
         let split_by_tag: Vec<&str> = info.split(&tags[i]).collect();
 
@@ -84,7 +85,7 @@ fn get_info(mut last_title: String, file_location: String) {
 
     let info_array: Vec<&str> = info.split_whitespace().collect();
 
-    if info_array.len() <= 0 {
+    if info_array.is_empty() {
         println!("Cmus is not running");
         sleep(120);
     } else if info_array[1] == "stopped" {
