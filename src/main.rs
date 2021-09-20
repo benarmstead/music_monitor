@@ -1,15 +1,15 @@
 // Todo
 // - Monitor current second in song, if goes back, then re record song as been replayed
 
-use std::{thread, time, process, env};
-use std::io::{Read, Write};
-use std::process::Command;
 use chrono::prelude::Local;
 use std::fs::OpenOptions;
+use std::io::{Read, Write};
+use std::process::Command;
+use std::{env, process, thread, time};
 
 fn lock_access() {
-   let mut file = std::fs::File::create("/tmp/cmus_music_monitor.lock").expect("create failed");
-   file.write_all("RUNNING".as_bytes()).expect("write failed");
+    let mut file = std::fs::File::create("/tmp/cmus_music_monitor.lock").expect("create failed");
+    file.write_all("RUNNING".as_bytes()).expect("write failed");
 }
 
 fn is_locked() -> bool {
@@ -28,7 +28,6 @@ fn sleep(timer: u64) {
     thread::sleep(time::Duration::from_secs(timer));
 }
 
-
 fn write_info(current_song: [String; 9], file_location: &str) {
     println!("{}", current_song.join(","));
     let mut file = OpenOptions::new()
@@ -43,12 +42,12 @@ fn write_info(current_song: [String; 9], file_location: &str) {
 }
 
 fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
-    for i in 0..7{
+    for i in 0..7 {
         let split_by_tag: Vec<&str> = info.split(&tags[i]).collect();
 
         if split_by_tag.len() == 1 {
             tags[i] = "".to_string();
-        }else{
+        } else {
             let tag_value: Vec<&str> = split_by_tag[1].lines().collect();
             tags[i] = tag_value[0].trim().to_string();
         }
@@ -58,12 +57,15 @@ fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
     }
 
     tags[7] = Local::now().naive_local().date().to_string();
-    tags[8] = Local::now().naive_local().time().format("%H:%M").to_string();
+    tags[8] = Local::now()
+        .naive_local()
+        .time()
+        .format("%H:%M")
+        .to_string();
     tags
 }
 
-
-fn get_info(mut last_title: String, file_location: String){
+fn get_info(mut last_title: String, file_location: String) {
     let mut tags: [String; 9] = Default::default();
     tags[0] = "tag title".to_string();
     tags[1] = "tag artist".to_string();
@@ -74,9 +76,9 @@ fn get_info(mut last_title: String, file_location: String){
     tags[6] = "tag date".to_string();
 
     let output = Command::new("cmus-remote")
-                         .arg("-Q")
-                         .output()
-                         .expect("cmus-remote: cmus is not running");
+        .arg("-Q")
+        .output()
+        .expect("cmus-remote: cmus is not running");
 
     let info = String::from_utf8(output.stdout).expect("Not UTF-8");
 
@@ -97,7 +99,7 @@ fn get_info(mut last_title: String, file_location: String){
         let current: String = current_song[0].clone();
 
         if last_title == current {
-        }else{
+        } else {
             last_title = current;
             write_info(current_song, &file_location);
         }
@@ -108,20 +110,21 @@ fn get_info(mut last_title: String, file_location: String){
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    if args.len() != 2{
+    if args.len() != 2 {
         println!("You must pass one argument, and one argument only.");
         process::exit(1);
     }
     let file_location = args[1].to_string();
     println!("{}", file_location);
 
-    if is_locked(){
+    if is_locked() {
         println!("All ready running!");
-       process::exit(1);
+        process::exit(1);
     }
 
     lock_access();
 
-    let random_string = "AEuJXHeUr7sKhwuWntS5wnitC5cTdtx3piRPp2Q5aDxrzqh5vZj4PyhQShJVWaTW".to_string();
+    let random_string =
+        "AEuJXHeUr7sKhwuWntS5wnitC5cTdtx3piRPp2Q5aDxrzqh5vZj4PyhQShJVWaTW".to_string();
     get_info(random_string, file_location);
 }
