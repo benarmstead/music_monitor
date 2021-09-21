@@ -22,15 +22,14 @@ pub fn write_info(current_song: [String; 9], file_location: &str) {
 }
 
 pub fn parse_info(info: String, mut tags: [String; 9]) -> [String; 9] {
-    #[allow(clippy::needless_range_loop)]
-    for i in 0..7 {
-        let split_by_tag: Vec<&str> = info.split(&tags[i]).collect();
+    for i in tags.iter_mut().take(7) {
+        let split_by_tag: Vec<&str> = info.split(&*i).collect();
 
         if split_by_tag.len() == 1 {
-            tags[i] = "".to_string();
+            *i = "".to_string();
         } else {
             let tag_value: Vec<&str> = split_by_tag[1].lines().collect();
-            tags[i] = tag_value[0].trim().to_string();
+            *i = tag_value[0].trim().to_string();
         }
         // I decided to replace the tags string array with the songs values.
         // This is due to the tags array being the correct size.
