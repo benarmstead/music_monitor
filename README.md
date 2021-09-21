@@ -2,7 +2,6 @@
 
 
 ![workflow](https://github.com/benarmstead/cmus-music-monitor-rs/actions/workflows/rust.yml/badge.svg)
-![workflow](https://github.com/benarmstead/cmus-music-monitor-rs/actions/workflows/devskim-analysis.yml/badge.svg)
 
 Rust program for Cmus to monitor music listening habits.
 
