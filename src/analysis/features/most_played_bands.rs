@@ -11,9 +11,9 @@ pub fn display(data: String) {
     let mut rng = rand::thread_rng();
 
     // Print all bands played and the amount of songs of which have been played respectively.
-    for i in 0..bands_vector.len() {
-        let name = bands_vector[i].get_name();
-        let total_songs_played = bands_vector[i].get_total_songs_played();
+    for (i, band) in bands_vector.iter().enumerate() {
+        let name = band.get_name();
+        let total_songs_played = band.get_total_songs_played();
         println!("{} : {}", name, total_songs_played);
 
         // Add Data struct to data vector for the pie chart to use.
