@@ -1,6 +1,3 @@
-// Todo
-// - Monitor current second in song, if goes back, then re record song as been replayed
-
 mod analysis;
 mod info;
 mod lock;
