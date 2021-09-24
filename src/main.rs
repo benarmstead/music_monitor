@@ -8,6 +8,7 @@ mod lock;
 pub use crate::info::*;
 pub use crate::lock::*;
 
+use rand::{distributions::Alphanumeric, Rng};
 use std::{env, process};
 
 fn main() {
@@ -39,7 +40,11 @@ fn start_monitor(file_location: String) {
 
     lock::lock_access();
 
-    let random_string =
-        "AEuJXHeUr7sKhwuWntS5wnitC5cTdtx3piRPp2Q5aDxrzqh5vZj4PyhQShJVWaTW".to_string();
+    let random_string: String = rand::thread_rng()
+        .sample_iter(&Alphanumeric)
+        .take(64)
+        .map(char::from)
+        .collect();
+
     info::get_info(random_string, file_location);
 }
