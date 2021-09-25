@@ -2,18 +2,18 @@ use crate::analysis;
 use piechart::{Chart, Color, Data};
 use rand::Rng;
 
-// Takes the csv data as a string and draws a pie chart of the most played bands from it.
-pub fn display(data: String) {
+// Takes the csv data as a string and draws a pie chart of the most played x from it.
+pub fn display(data: String, index: usize) {
     // Convert the csv data into a vector of structs containing artist name and songs played of that artist
-    let bands_vector = analysis::functions::generate_band::gen_band(data, 1);
+    let x_vector = analysis::functions::generate_x::gen_x(data, index);
 
     let mut data = vec![];
     let mut rng = rand::thread_rng();
 
-    // Print all bands played and the amount of songs of which have been played respectively.
-    for (i, band) in bands_vector.iter().enumerate() {
-        let name = band.get_name();
-        let total_songs_played = band.get_total_songs_played();
+    // Print all x played and the amount of songs of which have been played respectively.
+    for (i, x) in x_vector.iter().enumerate() {
+        let name = x.get_name();
+        let total_songs_played = x.get_total_songs_played();
         println!("{} : {}", name, total_songs_played);
 
         // Add Data struct to data vector for the pie chart to use.
@@ -37,7 +37,7 @@ pub fn display(data: String) {
 
     // Create the pie chart and print it.
     Chart::new()
-        .radius(15)
+        .radius(10)
         .aspect_ratio(4)
         .legend(true)
         .draw(&data);
