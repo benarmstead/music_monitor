@@ -11,8 +11,8 @@ use std::{env, process};
 fn main() {
     let args: Vec<String> = env::args().collect();
     let args_len = args.len();
-    if args_len > 3 || args_len == 1 {
-        println!("You must pass 1 or 2 arguments only.");
+    if args_len > 4 || args_len == 1 {
+        println!("You must pass 1 or 3 arguments only.");
         process::exit(1);
     }
     let file_location = args[1].to_string();
@@ -20,13 +20,11 @@ fn main() {
 
     if args_len == 2 {
         start_monitor(file_location);
-    } else if args_len == 3 && args[2] == "-d" {
-        start_analyse(file_location);
+    } else if args_len == 4 && args[2] == "-d" {
+        analysis::main::start(file_location, args[3].to_string());
+    } else {
+        println!("Incorrect number of arguments supplied!");
     }
-}
-
-fn start_analyse(file_location: String) {
-    analysis::main::start(file_location);
 }
 
 fn start_monitor(file_location: String) {
