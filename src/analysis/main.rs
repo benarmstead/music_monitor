@@ -6,25 +6,25 @@ pub fn start(file_location: String, arg: String) {
     // Most played:
     if arg == "-s" {
         // Song's
-        analysis::features::most_played_x::display(data.clone(), 0);
+        analysis::features::most_played_x::display(data, 0);
     } else if arg == "-b" {
         // Band's
-        analysis::features::most_played_x::display(data.clone(), 1);
+        analysis::features::most_played_x::display(data, 1);
     } else if arg == "-a" {
         // Album's
-        analysis::features::most_played_x::display(data.clone(), 2);
+        analysis::features::most_played_x::display(data, 2);
     } else if arg == "-g" {
         // Genre's
-        analysis::features::most_played_x::display(data.clone(), 3);
+        analysis::features::most_played_x::display(data, 3);
     } else if arg == "-l" {
         // Song length's
         analysis::features::most_played_x::display(data, 4);
     } else if arg == "-y" {
         // Year's
-        analysis::features::most_played_x::display(data.clone(), 6);
+        analysis::features::most_played_x::display(data, 6);
     } else if arg == "-d" {
         // Date's
-        analysis::features::most_played_x::display(data.clone(), 7);
+        analysis::features::most_played_x::display(data, 7);
     } else if arg == "-all" {
         for i in 0..7 {
             let except = vec![5];
