@@ -1,9 +1,9 @@
-# Cmus Music Monitor Rust
+# Music Monitor and Analyser
 
 
 ![workflow](https://github.com/benarmstead/cmus-music-monitor-rs/actions/workflows/rust.yml/badge.svg)
 
-Rust program for Cmus to monitor music listening habits.
+Program written in Rust which monitors music listening habbits and creates graphical visualisations of the data collected.
 
 This is a rust implementation of my shell version of this program found [here](https://github.com/benarmstead/cmus-music-monitor)
 
