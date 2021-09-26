@@ -40,7 +40,11 @@ Most played:
 
 `-all` : All of the above
 
-e.g. `./music_monitor ~/new.csv -d -all`
+e.g. `./music_monitor ~/new.csv -d -y`
+
+![image](https://user-images.githubusercontent.com/70973680/134824416-9e83ca04-5220-4cf0-b668-8ec0980c947c.png)
+
+![image](https://user-images.githubusercontent.com/70973680/134824099-a9f3a131-5dbe-4291-9356-231961d14517.png)
 
 ## Compiling from source
 
