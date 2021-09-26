@@ -1,27 +1,46 @@
 # Music Monitor and Analyser
 
 
-![workflow](https://github.com/benarmstead/cmus-music-monitor-rs/actions/workflows/rust.yml/badge.svg)
+![workflow](https://github.com/benarmstead/music_monitor/actions/workflows/rust.yml/badge.svg)
 
-Program written in Rust which monitors music listening habbits and creates graphical visualisations of the data collected.
+Program written in Rust to monitor music listening habbits and creates graphical visualisations of the data collected.
 
-This is a rust implementation of my shell version of this program found [here](https://github.com/benarmstead/cmus-music-monitor)
+[Supported music players](#support-id)
 
-Gets all the metadata of the song being listened to, and writes it to a CSV.
 
 ## Running
 
-`./cmus-music-monitor-rs <directory to CSV you want to use>`
+### Logger
 
-e.g. `./cmus-music-monitor-rs /home/ben/new.csv`
+`./music_monitor <path to CSV you want to log to>`
 
-**Warning**: the `.csv` should already exist. cmus-music-monitor-rs will not create it.
+e.g. `./music_monitor ~/new.csv`
 
-## Program to analyze data
+### Analyser and visualiser
 
-I have written a small python program utilizing matplotlib to analyze and effectively display the data stored in the .csv.
+`./music_monitor <path to CSV where your logged data is> -d <analysis of choice>`
 
-It can be found [here](https://github.com/benarmstead/music-grapher)
+#### Analysis available to chose from
+
+Most played:
+
+`-s` : Song's
+
+`-b` : Band's
+
+`-a` : Album's
+
+`-g` : Genre's
+
+`-l` : Song length's
+
+`-y` : Year's
+
+`-d` : Date's
+
+`-all` : All of the above
+
+e.g. `./music_monitor ~/new.csv -d -all`
 
 ## Compiling from source
 
@@ -31,11 +50,35 @@ It can be found [here](https://github.com/benarmstead/music-grapher)
 
 ### Build
 
-`cargo build`
+`cargo build --release`
 
-This program is intended and designed to be run in the background on boot.
+The loggging program is intended and designed to be run in the background on boot.
 
 # Output
-` <Title>, <Artist>, <Album>, <Genre>, <Song Length>, <Track number>,	<Year>,	<Play date>, <Play time>, <Volume>`
+`<Title>, <Artist>, <Album>, <Genre>, <Song Length>, <Track number>,	<Year>,	<Play date>, <Play time>, <Volume>`
 
-When a tag is not found, then nothing is added except "," , meaning that the colums are always the same for each field.
+When a tag is not found, then nothing is added except ",", meaning that the columns are always the same for each field.
+
+
+## Previous versions
+
+Music Monitor is a derivative of some previous programs I have written. However I have re-written them in Rust for music monitor to ensure it is pure Rust.
+
+Including a shell music monitor [here](https://github.com/benarmstead/music_monitor).
+
+And a music log analyser written in python [here](https://github.com/benarmstead/music-grapher).
+
+## <a name="support-id">Support</a>
+
+Each music player needs unique support for logging.
+
+**The analysis and visualiser will work on and .csv following the above described format.**
+
+Supported Music Players:
+- Cmus
+
+**Currently only CMUS is supported.**
+
+***I would greatly appreciate help adding support for logging with other music players.***
+
+***This is only a matter of adding a few vairables, but I don't use any other music player but cmus, so cannot do any extensive testing.***
