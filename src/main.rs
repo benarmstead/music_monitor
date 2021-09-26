@@ -6,6 +6,8 @@ pub use crate::info::*;
 pub use crate::lock::*;
 
 use rand::{distributions::Alphanumeric, Rng};
+use std::fs::File;
+use std::path::Path;
 use std::{env, process};
 
 fn main() {
@@ -41,5 +43,9 @@ fn start_monitor(file_location: String) {
         .map(char::from)
         .collect();
 
+    let path = Path::new(&file_location).exists();
+    if !path {
+        let _ = File::create(&file_location);
+    }
     info::get_info(random_string, file_location);
 }
