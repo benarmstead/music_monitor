@@ -27,7 +27,7 @@ pub fn gen_x(data: String, index: usize) -> Vec<X> {
     let mut x_vector = Vec::<X>::new();
 
     //Split the csv at each new line.
-    let split_lines = data.split('\n');
+    let split_lines = data.lines();
 
     for i in split_lines {
         let vec: Vec<&str> = i.split(',').collect();
