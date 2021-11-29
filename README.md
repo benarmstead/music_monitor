@@ -56,7 +56,7 @@ e.g. `./music_monitor ~/new.csv -d -y`
 
 `cargo build --release`
 
-The loggging program is intended and designed to be run in the background on boot.
+The logging program is intended and designed to be run in the background on boot.
 
 # Output
 `<Title>, <Artist>, <Album>, <Genre>, <Song Length>, <Track number>,	<Year>,	<Play date>, <Play time>, <Volume>`
