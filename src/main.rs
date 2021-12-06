@@ -30,12 +30,12 @@ fn main() {
 }
 
 fn start_monitor(file_location: String) {
-    if lock::is_locked() {
+    /*if lock::is_locked() {
         println!("All ready running!");
         process::exit(1);
     }
 
-    lock::lock_access();
+    lock::lock_access();*/
 
     let random_string: String = rand::thread_rng()
         .sample_iter(&Alphanumeric)
