@@ -8,5 +8,5 @@ edition = "2018"
 
 [dependencies]
 chrono = "0.4.19"
-rand = "0.8.4"
+rand = "0.8.5"
 piechart = "1.0.0"
